@@ -57,12 +57,25 @@ function CustomCursor() {
 }
 
 export default function App() {
-  const [introComplete, setIntroComplete] = useState(false)
+  const [showIntro, setShowIntro] = useState(false)
+  const [siteReady, setSiteReady] = useState(true)
+
+  const handlePlayIntro = () => {
+    setSiteReady(false)
+    setShowIntro(true)
+  }
+
+  const handleIntroComplete = () => {
+    setShowIntro(false)
+    setSiteReady(true)
+  }
 
   return (
     <>
-      {!introComplete && <Intro onComplete={() => setIntroComplete(true)} />}
-      {introComplete && (
+      <AnimatePresence>
+        {showIntro && <Intro onComplete={handleIntroComplete} />}
+      </AnimatePresence>
+      {siteReady && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -71,7 +84,7 @@ export default function App() {
         >
           <ScrollProgress />
           <CustomCursor />
-          <Header />
+          <Header onPlayIntro={handlePlayIntro} />
           <Hero />
           <Challenges />
           <ConfidentialAI />

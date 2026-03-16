@@ -179,9 +179,10 @@ function useScrambleText(target, active, delay = 0, speed = 40) {
 }
 
 export default function Intro({ onComplete }) {
-  const [phase, setPhase] = useState(0) // 0=waiting, 1=playing, 2=done
+  const [phase, setPhase] = useState(1) // start playing immediately
   const [progress, setProgress] = useState(0)
   const audioRef = useRef(null)
+  const startedRef = useRef(false)
   const nodes = useMemo(() => generateNodes(20), [])
   const edges = useMemo(() => generateEdges(nodes), [nodes])
 
@@ -189,8 +190,11 @@ export default function Intro({ onComplete }) {
   const title2 = useScrambleText('LABS', phase >= 1 && progress > 88, 0, 50)
   const subtitle = useScrambleText('Decentralized Confidential Computing', phase >= 1 && progress > 92, 0, 30)
 
-  const start = useCallback(() => {
-    setPhase(1)
+  // Auto-start on mount
+  useEffect(() => {
+    if (startedRef.current) return
+    startedRef.current = true
+
     audioRef.current = createAudioEngine()
     audioRef.current.playSequence()
 
@@ -230,31 +234,6 @@ export default function Intro({ onComplete }) {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8 }}
         >
-          {phase === 0 && (
-            <motion.button
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5 }}
-              onClick={start}
-              className="group flex flex-col items-center gap-6 cursor-pointer"
-            >
-              <div className="relative">
-                <motion.div
-                  className="w-24 h-24 rounded-full border-2 border-[#FF3912]/40 flex items-center justify-center"
-                  animate={{ boxShadow: ['0 0 20px rgba(255,57,18,0.2)', '0 0 40px rgba(255,57,18,0.4)', '0 0 20px rgba(255,57,18,0.2)'] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                >
-                  <svg viewBox="0 0 24 24" fill="none" className="w-10 h-10 ml-1">
-                    <path d="M8 5v14l11-7z" fill="#FF3912" />
-                  </svg>
-                </motion.div>
-              </div>
-              <span className="text-white/50 text-sm font-medium tracking-widest uppercase group-hover:text-white/80 transition-colors">
-                Enter Experience
-              </span>
-            </motion.button>
-          )}
-
           {phase === 1 && (
             <div className="relative w-full h-full flex items-center justify-center">
               {/* Network SVG animation */}
@@ -418,15 +397,15 @@ export default function Intro({ onComplete }) {
               <motion.button
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 3 }}
+                transition={{ delay: 1 }}
                 onClick={() => {
                   setPhase(2)
                   audioRef.current?.stop()
                   setTimeout(onComplete, 300)
                 }}
-                className="absolute bottom-12 right-8 text-white/20 hover:text-white/60 text-xs font-mono tracking-widest transition-colors cursor-pointer"
+                className="absolute bottom-12 right-8 px-4 py-2 border border-white/20 rounded-full text-white/50 hover:text-white hover:border-white/50 text-xs font-mono tracking-widest transition-all cursor-pointer hover:bg-white/5"
               >
-                SKIP →
+                SKIP &rarr;
               </motion.button>
             </div>
           )}
