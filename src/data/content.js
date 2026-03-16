@@ -53,12 +53,12 @@ export const projects = [
 ]
 
 export const team = [
-  { name: 'Alex Zaidelson', role: 'CEO', image: 'boy-1.png' },
+  { name: 'Alex Zaidelson', role: 'CEO', image: 'img1_result.webp', linkedin: 'https://www.linkedin.com/in/zaidelson/' },
   { name: 'Vlad Gelfer', role: 'Core Developer', image: 'vlad_result.jpg' },
   { name: 'Alex H', role: 'Core Developer', image: 'boy-1.png' },
   { name: 'Ilya Raykker', role: 'Core Developer', image: 'boy-1.png' },
   { name: 'Bohdan Chikh', role: 'Core Developer', image: 'bohdan_result.jpg' },
   { name: 'Yonathan Bartana', role: 'Director of Operations', image: 'yonathan_result.jpg' },
   { name: 'Orly Magled', role: 'Executive Assistant', image: 'orly_result.jpg' },
-  { name: 'Guy Zyskind', role: 'Founder', image: 'guz_result.jpg' },
+  { name: 'Guy Zyskind', role: 'Founder', image: 'guz_result.jpg', linkedin: 'https://www.linkedin.com/in/gguyz/' },
 ]
