@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-export default function Header({ onPlayIntro }) {
+export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
 
   return (
@@ -22,15 +22,6 @@ export default function Header({ onPlayIntro }) {
 
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-8">
-          <button
-            onClick={onPlayIntro}
-            className="text-sm font-medium text-black/70 hover:text-primary transition-colors flex items-center gap-1.5 cursor-pointer"
-          >
-            <svg viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5">
-              <path d="M8 5v14l11-7z" />
-            </svg>
-            Watch Intro
-          </button>
           <a
             href="mailto:info@scrtlabs.com"
             className="text-sm font-medium text-black/70 hover:text-primary transition-colors"
@@ -91,15 +82,6 @@ export default function Header({ onPlayIntro }) {
             className="md:hidden bg-white border-t border-black/5"
           >
             <div className="px-6 py-4 flex flex-col gap-4">
-              <button
-                onClick={() => { setMenuOpen(false); onPlayIntro() }}
-                className="text-sm font-medium text-black/70 flex items-center gap-1.5 cursor-pointer"
-              >
-                <svg viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5">
-                  <path d="M8 5v14l11-7z" />
-                </svg>
-                Watch Intro
-              </button>
               <a
                 href="mailto:info@scrtlabs.com"
                 className="text-sm font-medium text-black/70"

@@ -84,7 +84,22 @@ export default function App() {
         >
           <ScrollProgress />
           <CustomCursor />
-          <Header onPlayIntro={handlePlayIntro} />
+
+          {/* Floating Watch Intro button */}
+          <motion.button
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 1, duration: 0.5 }}
+            onClick={handlePlayIntro}
+            className="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-4 py-2.5 bg-black/80 backdrop-blur-md text-white text-sm font-medium rounded-full shadow-lg hover:bg-black hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer group"
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 group-hover:scale-110 transition-transform">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+            Watch Intro
+          </motion.button>
+
+          <Header />
           <Hero />
           <Challenges />
           <ConfidentialAI />

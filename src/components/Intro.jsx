@@ -43,8 +43,13 @@ function createAudioEngine() {
   function init() {
     ctx = new (window.AudioContext || window.webkitAudioContext)()
     masterGain = ctx.createGain()
-    masterGain.gain.value = 0.15
+    masterGain.gain.value = 0 // muted by default
     masterGain.connect(ctx.destination)
+  }
+
+  function setMuted(muted) {
+    if (!masterGain) return
+    masterGain.gain.value = muted ? 0 : 0.15
   }
 
   function playPad(freq, start, dur) {
@@ -144,7 +149,7 @@ function createAudioEngine() {
     if (ctx) ctx.close()
   }
 
-  return { playSequence, stop }
+  return { playSequence, stop, setMuted }
 }
 
 // Encryption-like random characters
@@ -181,6 +186,7 @@ function useScrambleText(target, active, delay = 0, speed = 40) {
 export default function Intro({ onComplete }) {
   const [phase, setPhase] = useState(1) // start playing immediately
   const [progress, setProgress] = useState(0)
+  const [muted, setMuted] = useState(true) // muted by default
   const audioRef = useRef(null)
   const startedRef = useRef(false)
   const nodes = useMemo(() => generateNodes(20), [])
@@ -393,20 +399,49 @@ export default function Intro({ onComplete }) {
                 </p>
               </div>
 
-              {/* Skip button */}
-              <motion.button
+              {/* Bottom controls */}
+              <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1 }}
-                onClick={() => {
-                  setPhase(2)
-                  audioRef.current?.stop()
-                  setTimeout(onComplete, 300)
-                }}
-                className="absolute bottom-12 right-8 px-4 py-2 border border-white/20 rounded-full text-white/50 hover:text-white hover:border-white/50 text-xs font-mono tracking-widest transition-all cursor-pointer hover:bg-white/5"
+                className="absolute bottom-12 right-8 flex items-center gap-3"
               >
-                SKIP &rarr;
-              </motion.button>
+                {/* Sound toggle */}
+                <button
+                  onClick={() => {
+                    const next = !muted
+                    setMuted(next)
+                    audioRef.current?.setMuted(next)
+                  }}
+                  className="px-4 py-2 border border-white/20 rounded-full text-white/50 hover:text-white hover:border-white/50 text-xs font-mono tracking-widest transition-all cursor-pointer hover:bg-white/5 flex items-center gap-1.5"
+                >
+                  {muted ? (
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-3.5 h-3.5">
+                      <path d="M11 5L6 9H2v6h4l5 4V5z" />
+                      <line x1="23" y1="9" x2="17" y2="15" />
+                      <line x1="17" y1="9" x2="23" y2="15" />
+                    </svg>
+                  ) : (
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-3.5 h-3.5">
+                      <path d="M11 5L6 9H2v6h4l5 4V5z" />
+                      <path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07" />
+                    </svg>
+                  )}
+                  {muted ? 'UNMUTE' : 'MUTE'}
+                </button>
+
+                {/* Skip button */}
+                <button
+                  onClick={() => {
+                    setPhase(2)
+                    audioRef.current?.stop()
+                    setTimeout(onComplete, 300)
+                  }}
+                  className="px-4 py-2 border border-white/20 rounded-full text-white/50 hover:text-white hover:border-white/50 text-xs font-mono tracking-widest transition-all cursor-pointer hover:bg-white/5"
+                >
+                  SKIP &rarr;
+                </button>
+              </motion.div>
             </div>
           )}
         </motion.div>
