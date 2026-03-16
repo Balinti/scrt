@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import SVGText from './SVGText'
+import Typewriter from './Typewriter'
 
 export default function ConfidentialAI() {
   return (
@@ -26,20 +26,12 @@ export default function ConfidentialAI() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="flex-1"
         >
-          <div className="hidden md:block">
-            <SVGText
+          <h2 className="text-2xl md:text-4xl font-bold text-black leading-tight">
+            <Typewriter
               text="Leading the Way in Confidential AI"
-              fontSize={36}
-              fontWeight={700}
-              fontFamily="'Roboto', sans-serif"
-              strokeColor="#FF3912"
-              color="#000"
-              duration={2}
-              maxWidth={480}
+              baseSpeed={45}
+              variance={25}
             />
-          </div>
-          <h2 className="md:hidden text-2xl font-bold text-black leading-tight">
-            Leading the Way in Confidential AI
           </h2>
           <p className="mt-6 text-base leading-relaxed text-body-text">
             SCRT Labs was an early pioneer in bringing Trusted Execution Environment (TEE)

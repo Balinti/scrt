@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import SVGText from './SVGText'
+import Typewriter from './Typewriter'
 
 function FloatingOrbs() {
   return (
@@ -49,38 +49,23 @@ export default function Hero() {
 
       <div className="relative max-w-[1140px] mx-auto px-6 flex flex-col md:flex-row items-center gap-10 md:gap-16">
         <motion.div className="flex-1 text-center md:text-left" style={{ y: textY }}>
-          {/* SVG animated heading */}
-          <div className="hidden md:block">
-            <SVGText
-              text="At the forefront of Decentralized Confidential Computing"
-              fontSize={48}
-              fontWeight={700}
-              fontFamily="'Roboto Slab', serif"
-              strokeColor="#FF3912"
-              color="#000"
-              gradient={true}
-              duration={2.5}
-              maxWidth={540}
-            />
-          </div>
-          {/* Mobile fallback (SVG text is hard to size on small screens) */}
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            className="md:hidden text-3xl font-bold leading-tight text-black"
+          <h1
+            className="text-3xl md:text-5xl lg:text-[52px] font-bold leading-tight"
             style={{ fontFamily: 'var(--font-slab)' }}
           >
-            At the forefront of{' '}
-            <span className="bg-gradient-to-r from-primary to-red bg-clip-text text-transparent">
-              Decentralized Confidential Computing
-            </span>
-          </motion.h1>
+            <Typewriter
+              text="At the forefront of Decentralized Confidential Computing"
+              className="bg-gradient-to-r from-primary to-red bg-clip-text text-transparent"
+              baseSpeed={50}
+              variance={30}
+              thinkPauseChance={0.1}
+            />
+          </h1>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
+            transition={{ duration: 0.7, delay: 3.5 }}
             className="mt-6 text-base md:text-lg leading-relaxed text-body-text max-w-xl"
           >
             SCRT Labs is the driving force and the founding core development team behind Secret
@@ -90,7 +75,7 @@ export default function Hero() {
           <motion.a
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.4 }}
+            transition={{ duration: 0.7, delay: 4 }}
             href="#challenges"
             className="group inline-flex items-center gap-2 mt-8 px-8 py-3.5 bg-primary text-white font-semibold rounded-[14px] hover:shadow-lg hover:shadow-primary/30 hover:scale-105 transition-all duration-300"
           >
