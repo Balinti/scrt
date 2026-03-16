@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { projects } from '../data/content'
+import SVGText from './SVGText'
 
 const cardVariants = {
   hidden: { opacity: 0, y: 40 },
@@ -14,12 +15,24 @@ export default function Projects() {
   return (
     <section className="py-16 md:py-24 bg-primary">
       <div className="max-w-[1140px] mx-auto px-6">
+        <div className="hidden md:flex justify-center">
+          <SVGText
+            text="Some Notable Projects Built on Secret Network"
+            fontSize={34}
+            fontWeight={700}
+            fontFamily="'Roboto', sans-serif"
+            strokeColor="#FFFF80"
+            color="#fff"
+            duration={2}
+            maxWidth={700}
+          />
+        </div>
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-2xl md:text-4xl font-bold text-white text-center"
+          className="md:hidden text-2xl font-bold text-white text-center"
         >
           Some Notable Projects Built on Secret Network
         </motion.h2>

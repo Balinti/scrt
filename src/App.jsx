@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, useScroll, useSpring, AnimatePresence } from 'framer-motion'
+import Intro from './components/Intro'
 import Header from './components/Header'
 import Hero from './components/Hero'
 import Challenges from './components/Challenges'
@@ -8,31 +9,6 @@ import Projects from './components/Projects'
 import Team from './components/Team'
 import JoinCTA from './components/JoinCTA'
 import Footer from './components/Footer'
-
-function PageLoader() {
-  return (
-    <motion.div
-      className="fixed inset-0 z-[100] bg-white flex items-center justify-center"
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.5, ease: 'easeInOut' }}
-    >
-      <motion.div className="flex flex-col items-center gap-4">
-        <motion.div
-          className="w-12 h-12 rounded-full border-3 border-primary/20 border-t-primary"
-          animate={{ rotate: 360 }}
-          transition={{ duration: 0.8, repeat: Infinity, ease: 'linear' }}
-        />
-        <motion.img
-          src={`${import.meta.env.BASE_URL}assets/images/scrt_labs_wordmark_128_50.svg`}
-          alt="SCRT Labs"
-          className="h-8 opacity-60"
-          animate={{ opacity: [0.4, 0.8, 0.4] }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-        />
-      </motion.div>
-    </motion.div>
-  )
-}
 
 function ScrollProgress() {
   const { scrollYProgress } = useScroll()
@@ -81,18 +57,18 @@ function CustomCursor() {
 }
 
 export default function App() {
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 1200)
-    return () => clearTimeout(timer)
-  }, [])
+  const [introComplete, setIntroComplete] = useState(false)
 
   return (
     <>
-      <AnimatePresence>{loading && <PageLoader />}</AnimatePresence>
-      {!loading && (
-        <div className="min-h-screen bg-white overflow-x-hidden">
+      {!introComplete && <Intro onComplete={() => setIntroComplete(true)} />}
+      {introComplete && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="min-h-screen bg-white overflow-x-hidden"
+        >
           <ScrollProgress />
           <CustomCursor />
           <Header />
@@ -103,7 +79,7 @@ export default function App() {
           <Team />
           <JoinCTA />
           <Footer />
-        </div>
+        </motion.div>
       )}
     </>
   )

@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
+import SVGText from './SVGText'
 
 function FloatingOrbs() {
   return (
@@ -48,11 +49,26 @@ export default function Hero() {
 
       <div className="relative max-w-[1140px] mx-auto px-6 flex flex-col md:flex-row items-center gap-10 md:gap-16">
         <motion.div className="flex-1 text-center md:text-left" style={{ y: textY }}>
+          {/* SVG animated heading */}
+          <div className="hidden md:block">
+            <SVGText
+              text="At the forefront of Decentralized Confidential Computing"
+              fontSize={48}
+              fontWeight={700}
+              fontFamily="'Roboto Slab', serif"
+              strokeColor="#FF3912"
+              color="#000"
+              gradient={true}
+              duration={2.5}
+              maxWidth={540}
+            />
+          </div>
+          {/* Mobile fallback (SVG text is hard to size on small screens) */}
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
-            className="text-3xl md:text-5xl lg:text-[52px] font-bold leading-tight text-black"
+            className="md:hidden text-3xl font-bold leading-tight text-black"
             style={{ fontFamily: 'var(--font-slab)' }}
           >
             At the forefront of{' '}
@@ -60,6 +76,7 @@ export default function Hero() {
               Decentralized Confidential Computing
             </span>
           </motion.h1>
+
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
